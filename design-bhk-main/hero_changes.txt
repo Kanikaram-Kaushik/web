@@ -1,0 +1,91 @@
+HERO SECTION CHANGES: ACTIVE (CURRENT STATE) VS ORIGINAL TEMPLATE
+
+1. H1 HEADING TEXT
+Original:
+<h1 className="text-5xl font-semibold leading-[1.1] text-foreground sm:text-6xl lg:text-7xl">
+  Discover spaces that inspire
+</h1>
+
+Now Active:
+<h1 className="text-5xl font-semibold leading-[1.1] text-foreground sm:text-6xl lg:text-7xl">
+  Transform your home into a <span className="text-accent">Masterpiece</span>
+</h1>
+
+---
+
+2. BADGE (Top Pill)
+Original:
+<div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-2">
+  <Sparkles className="h-4 w-4 text-accent" />
+  <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-strong">
+    Curated for Modern Living
+  </span>
+</div>
+
+Now Active (Bold, subtle frosted glass):
+<div className="inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-foreground/[0.08] px-4 py-2 backdrop-blur-md">
+  <Sparkle className="h-4 w-4 text-foreground/80 stroke-[2.5]" />
+  <span className="text-xs font-bold uppercase tracking-[0.2em] text-foreground">
+    AI-Powered Precision meets Human Artistry
+  </span>
+</div>
+
+---
+
+3. PARAGRAPH DESCRIPTION
+Original:
+<p className="max-w-xl text-lg leading-relaxed text-muted sm:text-xl">
+  DesignBHK combines expert interior designers with cutting-edge Al tools to help you discover, plan, and execute your dream home transformation efficiently.
+</p>
+
+Now Active (Near-black context + nowrap):
+<p className="max-w-xl text-lg leading-relaxed text-foreground/80 sm:text-xl">
+  DesignBHK combines expert interior designers with <span className="whitespace-nowrap">cutting-edge AI</span> tools to help you discover, plan, and execute your dream home transformation efficiently.
+</p>
+
+---
+
+4. BACKGROUND IMAGE & GRADIENTS
+Original:
+<Image src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0..." />
+<div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/40" />
+<div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+
+Now Active:
+<Image src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0..." />  (Remains the same warm image)
+<div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent" />
+<div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/10 to-transparent dark:hidden" />
+* (Note: Smooth fade allows the image to be fully visible on the right, while the dark overlay ensures the text is readable on the left.)
+
+---
+
+NOTE on Reverted Changes:
+The solid white capsule, "Masterpiece" frosted background highlight, black CTA button, and rounded floating card layout were tested but ultimately reverted based on preference, so they are not included in this active list.
+
+---
+
+5. ROUTING BUG FIX: "DISCOVERY" -> "DISCOVER"
+Issue: The "Discover" link on the navbar and hero button were throwing a 404 Page Not Found error.
+Cause: The links pointed to `/discover`, but the actual folder was named `/discovery`.
+Fix: 
+- Renamed the Next.js route folder: `src/app/discovery` -> `src/app/discover`
+- Updated all internal links across the codebase (nav, hero, footer, etc.) to point to `/discover` instead of `/discovery` to accurately match the new route.
+
+---
+
+6. NAVBAR GLASSMORPHISM & SPACING
+- Increased transparency: Changed `bg-background/80` to `bg-background/40` on the navbar background to allow the `backdrop-blur-xl` to create a much stronger iPhone-style frosted glass effect.
+- Reduced bottom padding: Changed `py-4` to `pt-4 pb-2.5` to shave exactly 6px off the bottom of the navbar, tightening the header vertically.
+
+7. MASTERPIECE TYPOGRAPHY
+- Removed all gradients, translucent overlays, and background clip bugs that were causing clipping artifacts.
+- Applied a strict, solid `text-zinc-900` (almost pure black) in Light Mode, and `text-zinc-300` in Dark Mode, so the text punches heavily off the background image using a strong `drop-shadow`.
+
+8. HERO LAYOUT: SEAMLESS FULL-WIDTH
+- Removed the top padding (`pt-2`, etc.) from the Hero container so it now sits perfectly flush under the glassy navbar.
+- Removed the curved borders (`rounded-[3rem]`) and side margins/padding.
+- Stretch to edge: The hero section now spans 100% of the screen width for a massive, immersive entryway instead of looking like a floating capsule.
+
+9. SEAMLESS HERO TRANSITION
+- Removed the hard bottom margin from the hero container.
+- Added an absolute positioned gradient at the bottom of the hero image (`bg-gradient-to-t from-background to-transparent`) that perfectly blends the bottom edge of the photo into the background color of the next section, creating a seamless scroll transition instead of a hard cut.
